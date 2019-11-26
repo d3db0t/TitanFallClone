@@ -3175,6 +3175,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1095282324}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1098179450 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100006, guid: c6453f8e1f814744d8b94e5a6d1f9942,
+    type: 3}
+  m_PrefabInstance: {fileID: 1458905988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1098349174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4013,10 +4019,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2000000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
-      propertyPath: near clip plane
-      value: 0.01
-      objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: Rifle
       value: 
@@ -4033,6 +4035,18 @@ PrefabInstance:
       propertyPath: GrenadeLauncher
       value: 
       objectReference: {fileID: 678803602}
+    - target: {fileID: 11400004, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: movementSettings.Player
+      value: 
+      objectReference: {fileID: 1098179450}
+    - target: {fileID: 5400000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: m_Interpolate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: near clip plane
+      value: 0.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
 --- !u!1001 &1468411991

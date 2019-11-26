@@ -19,6 +19,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public float JumpForce = 30f;
             public AnimationCurve SlopeCurveModifier = new AnimationCurve(new Keyframe(-90.0f, 1.0f), new Keyframe(0.0f, 1.0f), new Keyframe(90.0f, 0.0f));
             [HideInInspector] public float CurrentTargetSpeed = 8f;
+            public GameObject Player;
 
 #if !MOBILE_INPUT
             private bool m_Running;
@@ -44,7 +45,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 					CurrentTargetSpeed = ForwardSpeed;
 				}
 #if !MOBILE_INPUT
-	            if (Input.GetKey(RunKey))
+                if (Input.GetKey(RunKey) && Player.GetComponent<RigidbodyFirstPersonController>().crouched == false)
 	            {
 		            CurrentTargetSpeed *= RunMultiplier;
 		            m_Running = true;
@@ -88,6 +89,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
         private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
+        [HideInInspector] public bool crouched = false; // Crouch Boolean
 
         // Rifle
         public bool RifleChosen;
@@ -162,6 +164,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_Jump = true;
             }
+
+
 
             // Weapons
             _Rifle();
@@ -364,6 +368,26 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
             }
             m_Jump = false;
+
+            //Crouching
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                if (crouched)
+                {
+                    crouched = false;
+                }
+                else
+                {
+                    crouched = true;
+                }
+            }
+            if (crouched)
+            {
+                m_Capsule.height = 1.0f;
+            }else
+            {
+                m_Capsule.height = 1.6f;
+            }
         }
 
 
@@ -386,6 +410,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     m_RigidBody.velocity = Vector3.ProjectOnPlane(m_RigidBody.velocity, hitInfo.normal);
                 }
             }
+        }
+
+        public bool getCrouched()
+        {
+            return crouched;
         }
 
 
