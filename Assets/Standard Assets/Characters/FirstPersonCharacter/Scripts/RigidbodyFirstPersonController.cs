@@ -89,7 +89,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private CapsuleCollider m_Capsule;
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
-        private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
+        private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded, onWall;
 
         // Crouch Boolean
         [HideInInspector] public bool crouched = false;
@@ -407,6 +407,25 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
         }
 
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if( other.gameObject.tag == "RunnableWall")
+            {
+                m_RigidBody.useGravity = false;
+                movementSettings.DoubleJumpForce = 35;
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.tag == "RunnableWall")
+            {
+                m_RigidBody.useGravity = true;
+                movementSettings.DoubleJumpForce = 70;
+
+            }
+        }
 
         private float SlopeMultiplier()
         {
