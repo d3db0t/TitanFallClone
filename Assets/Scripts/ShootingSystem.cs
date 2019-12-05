@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using TMPro;
 
 public class ShootingSystem : MonoBehaviour
 {
-    public float Damage;
+    public int Damage;
     public float FireRate;
     public int MagazineSize;
     public bool IsAuto;
@@ -14,16 +15,20 @@ public class ShootingSystem : MonoBehaviour
     public GameObject Player;
     public Camera Camera;
     private float NextTimeToFire;
+    private int CurrentMagazineSize;
+    public TextMeshProUGUI AmmoNumber;
 
     void Start()
     {
         NextTimeToFire           = 0f;
         WeaponAnimatorController = GetComponent<Animator>();
+        CurrentMagazineSize      = MagazineSize;
     }
 
     
     void Update()
     {
+        AmmoNumber.text = CurrentMagazineSize.ToString();
         // Run
         if (Player.GetComponent<RigidbodyFirstPersonController>().movementSettings.Running)
         {
@@ -34,10 +39,24 @@ public class ShootingSystem : MonoBehaviour
             WeaponAnimatorController.SetBool("Run", false);
         }
 
+        // Reload
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (CurrentMagazineSize != MagazineSize)
+            {
+                WeaponAnimatorController.SetBool("Reload", true);
+                CurrentMagazineSize = MagazineSize;
+            }
+        }
+        else
+        {
+            WeaponAnimatorController.SetBool("Reload", false);
+        }
+
         // Shoot
         if (IsAuto)
         {
-            if (Input.GetKey(KeyCode.Mouse0) && Time.time >= NextTimeToFire)
+            if (Input.GetKey(KeyCode.Mouse0) && Time.time >= NextTimeToFire && !(CurrentMagazineSize <= 0) && !WeaponAnimatorController.GetCurrentAnimatorStateInfo(0).IsName("Reload"))
             {
                 WeaponAnimatorController.SetBool("Shoot", true);
                 NextTimeToFire = Time.time + 1f/FireRate;
@@ -50,7 +69,7 @@ public class ShootingSystem : MonoBehaviour
         }
         else if (!IsAuto)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= NextTimeToFire)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= NextTimeToFire && !(CurrentMagazineSize <= 0) && !WeaponAnimatorController.GetCurrentAnimatorStateInfo(0).IsName("Reload"))
             {
                 WeaponAnimatorController.SetBool("Shoot", true);
                 NextTimeToFire = Time.time + 1f/FireRate;
@@ -61,25 +80,20 @@ public class ShootingSystem : MonoBehaviour
                 WeaponAnimatorController.SetBool("Shoot", false);
             }
         }
-
-        // Reload
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            WeaponAnimatorController.SetBool("Reload", true);
-        }
-        else
-        {
-            WeaponAnimatorController.SetBool("Reload", false);
-        }
     }
 
     public void Shoot()
     {
+        CurrentMagazineSize -= 1;
         RaycastHit hit;
         if(Physics.Raycast(Camera.transform.position, Camera.transform.forward, out hit, Range))
         {
-            Debug.Log(hit.transform.name);
-
+            //Debug.Log(hit.transform.name);
+            if (hit.transform.tag == "Enemy")
+            {
+                if (!hit.transform.GetComponent<EnemyPilotController>().Dead)
+                    hit.transform.GetComponent<EnemyPilotController>().TakeDamage(Damage);
+            }
         }
 
     }
