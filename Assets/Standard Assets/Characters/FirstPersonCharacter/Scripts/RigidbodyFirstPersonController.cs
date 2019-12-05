@@ -98,27 +98,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [HideInInspector] public bool doubleJump = false;
 
 
-        // Rifle
-        public bool RifleChosen;
-        public bool RifleEquipped;
-        public GameObject Rifle;
-
-        // Sniper
-        public bool SniperChosen;
-        public bool SniperEquipped;
-        public GameObject Sniper;
-
-        // Shotgun
-        public bool ShotgunChosen;
-        public bool ShotgunEquipped;
-        public GameObject Shotgun;
-
-        // GrenadeLauncher
-        public bool GrenadeLauncherChosen;
-        public bool GrenadeLauncherEquipped;
-        public GameObject GrenadeLauncher;
-
-
         public Vector3 Velocity
         {
             get { return m_RigidBody.velocity; }
@@ -149,14 +128,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void Start()
         {
-            RifleChosen             = true; // For Testing (Delete After)
-            RifleEquipped           = true; // For Testing (Delete After)
-            SniperChosen            = false; // For Testing (Delete After)
-            SniperEquipped          = false; // For Testing (Delete After)
-            ShotgunChosen           = false; // For Testing (Delete After)
-            ShotgunEquipped         = false; // For Testing (Delete After)
-            GrenadeLauncherChosen   = false;  // For Testing (Delete After)
-            GrenadeLauncherEquipped = false;  // For Testing (Delete After)
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             mouseLook.Init (transform, cam.transform);
@@ -170,161 +141,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
             {
                 m_Jump = true;
-            }
-
-
-
-            // Weapons
-            _Rifle();
-            _Sniper();
-            _Shotgun();
-            _GrenadeLauncher();
-            
-
-            
-        }
-
-        private void _Sniper()
-        {
-            if (SniperChosen && SniperEquipped)
-            {
-                // Run
-                if (Running)
-                {
-                    Sniper.GetComponent<Animator>().SetBool("Run", true);
-                }
-                else
-                {
-                    Sniper.GetComponent<Animator>().SetBool("Run", false);
-                }
-
-                // Shoot
-                if (Input.GetKeyDown(KeyCode.Mouse0))
-                {
-                    Sniper.GetComponent<Animator>().SetBool("Shoot", true);
-                }
-                else
-                {
-                    Sniper.GetComponent<Animator>().SetBool("Shoot", false);
-                }
-
-                // Reload
-                if (Input.GetKeyDown(KeyCode.R))
-                {
-                    Sniper.GetComponent<Animator>().SetBool("Reload", true);
-                }
-                else
-                {
-                    Sniper.GetComponent<Animator>().SetBool("Reload", false);
-                }
-            }
-        }
-
-        private void _Rifle()
-        {
-            if (RifleChosen && RifleEquipped)
-            {
-                // Run
-                if (Running)
-                {
-                    Rifle.GetComponent<Animator>().SetBool("Run", true);
-                }
-                else
-                {
-                    Rifle.GetComponent<Animator>().SetBool("Run", false);
-                }
-
-                // Shoot
-                if (Input.GetKey(KeyCode.Mouse0))
-                {
-                    Rifle.GetComponent<Animator>().SetBool("Shoot", true);
-                }
-                else
-                {
-                    Rifle.GetComponent<Animator>().SetBool("Shoot", false);
-                }
-
-                // Reload
-                if (Input.GetKeyDown(KeyCode.R))
-                {
-                    Rifle.GetComponent<Animator>().SetBool("Reload", true);
-                }
-                else
-                {
-                    Rifle.GetComponent<Animator>().SetBool("Reload", false);
-                }
-            }
-        }
-
-        private void _Shotgun()
-        {
-            if (ShotgunChosen && ShotgunEquipped)
-            {
-                // Run
-                if (Running)
-                {
-                    Shotgun.GetComponent<Animator>().SetBool("Run", true);
-                }
-                else
-                {
-                    Shotgun.GetComponent<Animator>().SetBool("Run", false);
-                }
-
-                // Shoot
-                if (Input.GetKeyDown(KeyCode.Mouse0))
-                {
-                    Shotgun.GetComponent<Animator>().SetBool("Shoot", true);
-                }
-                else
-                {
-                    Shotgun.GetComponent<Animator>().SetBool("Shoot", false);
-                }
-
-                // Reload
-                if (Input.GetKeyDown(KeyCode.R))
-                {
-                    Shotgun.GetComponent<Animator>().SetBool("Reload", true);
-                }
-                else
-                {
-                    Shotgun.GetComponent<Animator>().SetBool("Reload", false);
-                }
-            }
-        }
-
-        private void _GrenadeLauncher()
-        {
-            if (GrenadeLauncherChosen && GrenadeLauncherEquipped)
-            {
-                // Run
-                if (Running)
-                {
-                    GrenadeLauncher.GetComponent<Animator>().SetBool("Run", true);
-                }
-                else
-                {
-                    GrenadeLauncher.GetComponent<Animator>().SetBool("Run", false);
-                }
-
-                // Shoot
-                if (Input.GetKeyDown(KeyCode.Mouse0))
-                {
-                    GrenadeLauncher.GetComponent<Animator>().SetBool("Shoot", true);
-                }
-                else
-                {
-                    GrenadeLauncher.GetComponent<Animator>().SetBool("Shoot", false);
-                }
-
-                // Reload
-                if (Input.GetKeyDown(KeyCode.R))
-                {
-                    GrenadeLauncher.GetComponent<Animator>().SetBool("Reload", true);
-                }
-                else
-                {
-                    GrenadeLauncher.GetComponent<Animator>().SetBool("Reload", false);
-                }
             }
         }
 

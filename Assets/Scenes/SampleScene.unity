@@ -2733,7 +2733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &963194226
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2814,7 +2814,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: f58190e5463185e4e932376698a7cdb1,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: f58190e5463185e4e932376698a7cdb1,
         type: 3}
@@ -3181,6 +3181,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1458905988}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1098179451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098179450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680b583b31beee441803e9360b713e93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1098349174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3369,6 +3381,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4511427168459332, guid: 19275419fedd9184180a5665b0bacd4e,
     type: 3}
   m_PrefabInstance: {fileID: 1108931666}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1126841830 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2000000, guid: c6453f8e1f814744d8b94e5a6d1f9942,
+    type: 3}
+  m_PrefabInstance: {fileID: 1458905988}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1135109992
 GameObject:
@@ -3960,6 +3978,25 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 775060529}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1433793594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433793591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaebf948037d2344fa38c5341aa672d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 70
+  FireRate: 3
+  MagazineSize: 12
+  IsAuto: 0
+  Range: 4
+  Player: {fileID: 1098179450}
+  Camera: {fileID: 1126841830}
 --- !u!1001 &1458905988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4018,6 +4055,14 @@ PrefabInstance:
     - target: {fileID: 400002, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: Rifle
@@ -5570,6 +5615,25 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 963338408}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1988060237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988060234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaebf948037d2344fa38c5341aa672d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 10
+  FireRate: 10
+  MagazineSize: 35
+  IsAuto: 1
+  Range: 65
+  Player: {fileID: 1098179450}
+  Camera: {fileID: 1126841830}
 --- !u!1001 &2004933711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5711,7 +5775,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 04650a6c4168a47429f4788122568a4b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 04650a6c4168a47429f4788122568a4b,
         type: 3}
@@ -5781,6 +5845,25 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2052836737}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2052836741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052836738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaebf948037d2344fa38c5341aa672d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 85
+  FireRate: 0.5
+  MagazineSize: 6
+  IsAuto: 0
+  Range: 100
+  Player: {fileID: 1098179450}
+  Camera: {fileID: 1126841830}
 --- !u!1001 &2067451502
 PrefabInstance:
   m_ObjectHideFlags: 0
