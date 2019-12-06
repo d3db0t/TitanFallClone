@@ -20,6 +20,10 @@ public class EnemyPilotController : MonoBehaviour
     public bool activated;
     public Image HealthBar;
     public GameObject OuterHUD;
+    public GameObject BulletSpawnPoint;
+    public GameObject Bullet;
+    public ParticleSystem MuzzleFlash;
+    private float NextTimeToFire;
 
     void Start()
     {
@@ -32,6 +36,7 @@ public class EnemyPilotController : MonoBehaviour
         HP                   = MaxHP;
         currentTargetIndex   = 0;
         time                 = 0;
+        NextTimeToFire       = 0f;
     }
 
 
@@ -60,7 +65,12 @@ public class EnemyPilotController : MonoBehaviour
                 {
                     animator.SetBool("StepForward", false);
                     agent.transform.LookAt(playerposition);
-                    animator.SetBool("Shoot", true);
+                    if (Time.time >= NextTimeToFire)
+                    {
+                        animator.SetBool("Shoot", true);
+                        Shoot();
+                        NextTimeToFire = Time.time + 1f/5;
+                    }
                 }
             }
             else
@@ -124,5 +134,13 @@ public class EnemyPilotController : MonoBehaviour
         animator.SetTrigger("Die");
         GetComponent<NavMeshAgent>().isStopped = true;
         OuterHUD.GetComponent<OuterHUDManager>().IncreaseTitanMeter(100);
+    }
+
+    public void Shoot()
+    {
+        MuzzleFlash.Play();
+        GameObject BulletClone = Instantiate(Bullet, BulletSpawnPoint.transform.position, BulletSpawnPoint.transform.rotation);
+        BulletClone.GetComponent<Rigidbody>().AddForce(BulletSpawnPoint.transform.forward * 1700);
+        Destroy (BulletClone, 2);
     }
 }
