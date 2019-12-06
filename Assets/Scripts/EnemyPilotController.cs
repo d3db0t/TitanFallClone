@@ -77,9 +77,10 @@ public class EnemyPilotController : MonoBehaviour
             {
                 // if pilot is not activated, it should keep on patrolling between the two targets
                 Transform currentTarget = targets[currentTargetIndex];
-                float patrolDistance = currentTarget.position.x - transform.position.x;
+                float patrolDistanceX = currentTarget.position.x - transform.position.x;
+                float patrolDistanceZ = currentTarget.position.z - transform.position.z;
 
-                if(patrolDistance < 0.1 && patrolDistance > -0.1)
+                if(patrolDistanceX < 0.1 && patrolDistanceX > -0.1 && patrolDistanceZ < 0.1 && patrolDistanceZ > -0.1)
                 {
                     // if pilot reaches one of the targets, it should wait for a while then switch to the other one
                     if(time > patrolWaitTime)
@@ -91,6 +92,7 @@ public class EnemyPilotController : MonoBehaviour
                         }
 
                         currentTarget = targets[currentTargetIndex];
+                        agent.transform.LookAt(currentTarget.position);
                         agent.SetDestination(currentTarget.position);
                         animator.SetBool("Walk", true);
 
@@ -104,7 +106,8 @@ public class EnemyPilotController : MonoBehaviour
                 }
                 else
                 {
-                    agent.SetDestination(currentTarget.transform.position);
+                    agent.transform.LookAt(currentTarget.position);
+                    agent.SetDestination(currentTarget.position);
                     animator.SetBool("Walk", true);
                 }
             }
