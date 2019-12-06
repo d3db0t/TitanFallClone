@@ -50,6 +50,7 @@ public class EnemyPilotController : MonoBehaviour
 
             if (activated)
             {
+                animator.SetBool("Walk", false);
                 if (agent.stoppingDistance < distance)
                 {
                     agent.SetDestination(player.transform.position);
@@ -80,7 +81,6 @@ public class EnemyPilotController : MonoBehaviour
                         }
 
                         currentTarget = targets[currentTargetIndex];
-                        agent.transform.LookAt(currentTarget.position);
                         agent.SetDestination(currentTarget.position);
                         animator.SetBool("Walk", true);
 
@@ -90,12 +90,10 @@ public class EnemyPilotController : MonoBehaviour
                     {
                         time += Time.deltaTime;
                         animator.SetBool("Walk", false);
-                        animator.SetBool("Idle", true);
                     }
                 }
                 else
                 {
-                    agent.transform.LookAt(currentTarget.position);
                     agent.SetDestination(currentTarget.transform.position);
                     animator.SetBool("Walk", true);
                 }
