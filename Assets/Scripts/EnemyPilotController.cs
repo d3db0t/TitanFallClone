@@ -16,6 +16,7 @@ public class EnemyPilotController : MonoBehaviour
     public bool Dead;
     public bool activated;
     public Image HealthBar;
+    public GameObject OuterHUD;
     
     void Start()
     {
@@ -80,5 +81,6 @@ public class EnemyPilotController : MonoBehaviour
         animator.ResetTrigger("HitReaction");
         animator.SetTrigger("Die");
         GetComponent<NavMeshAgent>().isStopped = true;
+        OuterHUD.GetComponent<OuterHUDManager>().IncreaseTitanMeter(100);
     }
 }
