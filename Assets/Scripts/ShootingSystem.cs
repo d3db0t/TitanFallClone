@@ -17,6 +17,9 @@ public class ShootingSystem : MonoBehaviour
     private float NextTimeToFire;
     private int CurrentMagazineSize;
     public TextMeshProUGUI AmmoNumber;
+    public GameObject MetalImpactEffect;
+    public GameObject ConcreteImpactEffect;
+    public ParticleSystem MuzzleFlash;
 
     void Start()
     {
@@ -84,6 +87,7 @@ public class ShootingSystem : MonoBehaviour
 
     public void Shoot()
     {
+        MuzzleFlash.Play();
         CurrentMagazineSize -= 1;
         RaycastHit hit;
         if(Physics.Raycast(Camera.transform.position, Camera.transform.forward, out hit, Range))
@@ -92,7 +96,16 @@ public class ShootingSystem : MonoBehaviour
             if (hit.transform.tag == "Enemy")
             {
                 if (!hit.transform.GetComponent<EnemyPilotController>().Dead)
+                {
                     hit.transform.GetComponent<EnemyPilotController>().TakeDamage(Damage);
+                    GameObject ImpactGO = Instantiate(MetalImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                    Destroy(ImpactGO, 2f);
+                }
+            }
+            else if (hit.transform.tag == "Concrete")
+            {
+                GameObject ImpactGO = Instantiate(ConcreteImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(ImpactGO, 2f);
             }
         }
 
