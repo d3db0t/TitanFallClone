@@ -7,9 +7,12 @@ using UnityEngine.UI;
 [RequireComponent(typeof (UnityEngine.AI.NavMeshAgent))]
 public class EnemyPilotController : MonoBehaviour
 {
-    public NavMeshAgent agent { get; private set; }            
+    public NavMeshAgent agent { get; private set; }
     public Transform[] targets; // empty objects (for patrolling)
-    public GameObject player;                                  
+    private int currentTargetIndex; // this is used for patrolling
+    private float time; // this is used for the waiting time when patrolling
+    public int patrolWaitTime; // this is the time the pilot will spend waiting when before moving to the other target
+    public GameObject player;
     private Animator animator;
     private int HP;
     public int MaxHP;
@@ -17,7 +20,7 @@ public class EnemyPilotController : MonoBehaviour
     public bool activated;
     public Image HealthBar;
     public GameObject OuterHUD;
-    
+
     void Start()
     {
         agent                = GetComponent<NavMeshAgent>();
@@ -27,9 +30,11 @@ public class EnemyPilotController : MonoBehaviour
         Dead                 = false;
         activated            = false;
         HP                   = MaxHP;
+        currentTargetIndex   = 0;
+        time                 = 0;
     }
 
-    
+
     void Update()
     {
         if(!Dead)
@@ -41,7 +46,7 @@ public class EnemyPilotController : MonoBehaviour
             {
                 activated = true;
             }
-            
+
             if (activated)
             {
                 if (agent.stoppingDistance < distance)
@@ -54,6 +59,44 @@ public class EnemyPilotController : MonoBehaviour
                     animator.SetBool("StepForward", false);
                     agent.transform.LookAt(playerposition);
                     animator.SetBool("Shoot", true);
+                }
+            }
+            else
+            {
+                // if pilot is not activated, it should keep on patrolling between the two targets
+                Transform currentTarget = targets[currentTargetIndex];
+                distance = currentTarget.position.x - transform.position.x;
+
+                if(distance < 0.1 && distance > -0.1)
+                {
+                    // if pilot reaches one of the targets, it should wait for a while then switch to the other one
+                    if(time > patrolWaitTime)
+                    {
+                        currentTargetIndex++;
+                        if(currentTargetIndex == 2)
+                        {
+                            currentTargetIndex = 0;
+                        }
+
+                        currentTarget = targets[currentTargetIndex];
+                        agent.transform.LookAt(currentTarget.position);
+                        agent.SetDestination(currentTarget.position);
+                        animator.SetBool("Walk", true);
+
+                        time = 0;
+                    }
+                    else
+                    {
+                        time += Time.deltaTime;
+                        animator.SetBool("Walk", false);
+                        animator.SetBool("Idle", true);
+                    }
+                }
+                else
+                {
+                    agent.transform.LookAt(currentTarget.position);
+                    agent.SetDestination(currentTarget.transform.position);
+                    animator.SetBool("Walk", true);
                 }
             }
         }
