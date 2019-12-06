@@ -44,6 +44,7 @@ public class EnemyPilotController : MonoBehaviour
 
             if (distance <= 10)
             {
+                animator.SetBool("Walk", false);
                 activated = true;
             }
 
@@ -65,9 +66,9 @@ public class EnemyPilotController : MonoBehaviour
             {
                 // if pilot is not activated, it should keep on patrolling between the two targets
                 Transform currentTarget = targets[currentTargetIndex];
-                distance = currentTarget.position.x - transform.position.x;
+                float patrolDistance = currentTarget.position.x - transform.position.x;
 
-                if(distance < 0.1 && distance > -0.1)
+                if(patrolDistance < 0.1 && patrolDistance > -0.1)
                 {
                     // if pilot reaches one of the targets, it should wait for a while then switch to the other one
                     if(time > patrolWaitTime)
