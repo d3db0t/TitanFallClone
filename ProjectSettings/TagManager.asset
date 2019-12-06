@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - FxTemporaire
   - Concrete
+  - OuterHUD
   layers:
   - Default
   - TransparentFX
