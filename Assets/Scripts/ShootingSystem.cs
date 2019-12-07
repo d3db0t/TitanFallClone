@@ -48,7 +48,7 @@ public class ShootingSystem : MonoBehaviour
         // Reload
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (CurrentMagazineSize != MagazineSize)
+            if (CurrentMagazineSize != MagazineSize && !WeaponAnimatorController.GetCurrentAnimatorStateInfo(0).IsName("Shoot"))
             {
                 WeaponAnimatorController.SetBool("Reload", true);
                 CurrentMagazineSize = MagazineSize;
@@ -68,14 +68,14 @@ public class ShootingSystem : MonoBehaviour
                 NextTimeToFire = Time.time + 1f/FireRate;
                 Shoot();
             }
-            else
+            else if (Input.GetKeyUp(KeyCode.Mouse0))
             {
                 WeaponAnimatorController.SetBool("Shoot", false);
             }
         }
         else if (!IsAuto)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= NextTimeToFire && !(CurrentMagazineSize <= 0) && !WeaponAnimatorController.GetCurrentAnimatorStateInfo(0).IsName("Reload"))
+            if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= NextTimeToFire && !(CurrentMagazineSize <= 0) && !WeaponAnimatorController.GetCurrentAnimatorStateInfo(0).IsName("Reload") && !WeaponAnimatorController.GetCurrentAnimatorStateInfo(0).IsName("Shoot"))
             {
                 WeaponAnimatorController.SetBool("Shoot", true);
                 NextTimeToFire = Time.time + 1f/FireRate;
