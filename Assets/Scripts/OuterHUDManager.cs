@@ -12,6 +12,7 @@ public class OuterHUDManager : MonoBehaviour
     public float CurrentHP;
     public float MaxHP;
     public Image HealthBar;
+    public Text HealthBarValue;
     public float NextTimeToGenerateHealth;
 
     void Start()
@@ -21,6 +22,7 @@ public class OuterHUDManager : MonoBehaviour
         FullyChargedTitanMeter.enabled = false;
         TitanIsReady                   = false;
         CurrentHP                      = MaxHP;
+        HealthBarValue.text            = MaxHP.ToString();
     }
 
     void Update()
@@ -29,6 +31,7 @@ public class OuterHUDManager : MonoBehaviour
         {
             CurrentHP += 0.05f;
             HealthBar.fillAmount = CurrentHP / MaxHP;
+            HealthBarValue.text  = ((int) CurrentHP).ToString();
         }
     }
 
@@ -47,6 +50,7 @@ public class OuterHUDManager : MonoBehaviour
     {
         CurrentHP -= dmg;
         HealthBar.fillAmount = CurrentHP / MaxHP;
+        HealthBarValue.text  = ((int) CurrentHP).ToString();
         NextTimeToGenerateHealth = Time.time + 3f; // 3 seconds
         Debug.Log(CurrentHP);
         if (CurrentHP <= 0)
