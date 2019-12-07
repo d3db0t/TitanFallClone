@@ -20,12 +20,15 @@ public class ShootingSystem : MonoBehaviour
     public GameObject MetalImpactEffect;
     public GameObject ConcreteImpactEffect;
     public ParticleSystem MuzzleFlash;
+    public GameObject Flash;
+    public bool ToggleFlash;
 
     void Start()
     {
         NextTimeToFire           = 0f;
         WeaponAnimatorController = GetComponent<Animator>();
         CurrentMagazineSize      = MagazineSize;
+        ToggleFlash              = false;
     }
 
     
@@ -82,6 +85,13 @@ public class ShootingSystem : MonoBehaviour
             {
                 WeaponAnimatorController.SetBool("Shoot", false);
             }
+        }
+
+        // Flash
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Flash.SetActive(!ToggleFlash);
+            ToggleFlash = !ToggleFlash;
         }
     }
 
