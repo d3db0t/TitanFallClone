@@ -9,7 +9,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public Camera Camera;
         public CurveControlledBob motionBob = new CurveControlledBob();
         public LerpControlledBob jumpAndLandingBob = new LerpControlledBob();
-        public RigidbodyFirstPersonController rigidbodyFirstPersonController;
+        //public RigidbodyFirstPersonController rigidbodyFirstPersonController;
+        public TitanFPSController titanFPSController;
         public float StrideInterval;
         [Range(0f, 1f)] public float RunningStrideLengthen;
 
@@ -29,26 +30,30 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Update()
         {
           //  m_CameraRefocus.GetFocusPoint();
-            Vector3 newCameraPosition;
-            if (rigidbodyFirstPersonController.Velocity.magnitude > 0 && rigidbodyFirstPersonController.Grounded)
+            Vector3 newCameraPosition = Vector3.zero;
+            if (titanFPSController.Velocity.magnitude > 0 && titanFPSController.Grounded)
             {
-                Camera.transform.localPosition = motionBob.DoHeadBob(rigidbodyFirstPersonController.Velocity.magnitude*(rigidbodyFirstPersonController.Running ? RunningStrideLengthen : 1f));
+                Camera.transform.localPosition = Vector3.Lerp(Camera.transform.localPosition,
+                                                 motionBob.DoHeadBob(titanFPSController.Velocity.magnitude * (titanFPSController.Running ? RunningStrideLengthen : 1f)),
+                                                 Time.deltaTime * 6f);
+                
+                //motionBob.DoHeadBob(titanFPSController.Velocity.magnitude*(titanFPSController.Running ? RunningStrideLengthen : 1f));
                 newCameraPosition = Camera.transform.localPosition;
                 newCameraPosition.y = Camera.transform.localPosition.y - jumpAndLandingBob.Offset();
             }
             else
             {
-                newCameraPosition = Camera.transform.localPosition;
+                newCameraPosition = Vector3.Lerp(newCameraPosition, Camera.transform.localPosition, Time.deltaTime *6f);
                 newCameraPosition.y = m_OriginalCameraPosition.y - jumpAndLandingBob.Offset();
             }
-            Camera.transform.localPosition = newCameraPosition;
+            Camera.transform.localPosition = Vector3.Lerp(Camera.transform.localPosition, newCameraPosition, Time.deltaTime * 6f);
 
-            if (!m_PreviouslyGrounded && rigidbodyFirstPersonController.Grounded)
+            if (!m_PreviouslyGrounded && titanFPSController.Grounded)
             {
                 StartCoroutine(jumpAndLandingBob.DoBobCycle());
             }
 
-            m_PreviouslyGrounded = rigidbodyFirstPersonController.Grounded;
+            m_PreviouslyGrounded = titanFPSController.Grounded;
           //  m_CameraRefocus.SetFocusPoint();
         }
     }

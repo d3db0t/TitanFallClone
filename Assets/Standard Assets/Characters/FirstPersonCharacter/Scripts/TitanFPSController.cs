@@ -7,6 +7,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CapsuleCollider))]
+    [RequireComponent(typeof(AudioSource))]
     public class TitanFPSController : MonoBehaviour
     {
         [Serializable]
@@ -20,6 +21,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public float JumpForce = 30f;
             public AnimationCurve SlopeCurveModifier = new AnimationCurve(new Keyframe(-90.0f, 1.0f), new Keyframe(0.0f, 1.0f), new Keyframe(90.0f, 0.0f));
             [HideInInspector] public float CurrentTargetSpeed = 8f;
+            
 
 #if !MOBILE_INPUT
             private bool m_Running;
@@ -89,6 +91,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
         private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
+        private bool walking = false;
+
+        public AudioClip footStep;
+        public AudioClip runningStep;
+        private AudioSource audioSource;
+        private bool playAudio;
+        private bool audioPlayed = false;
 
 
         public Vector3 Velocity
@@ -123,6 +132,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
+            audioSource = GetComponent<AudioSource>();
             mouseLook.Init(transform, cam.transform);
         }
 
@@ -151,7 +161,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 StartCoroutine("DashBackwards");
             }
 
-
+            //if (walking)
+            //{
+            //    StartCoroutine("playFootsteps");
+            //}
 
         }
 
@@ -163,6 +176,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (advancedSettings.airControl || m_IsGrounded))
             {
+                if(audioPlayed == false)
+                {
+                    StartCoroutine("playFootsteps");
+                }
                 // always move along the camera forward as it is the direction that it being aimed at
                 Vector3 desiredMove = cam.transform.forward * input.y + cam.transform.right * input.x;
                 desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
@@ -170,6 +187,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 desiredMove.x = desiredMove.x * movementSettings.CurrentTargetSpeed;
                 desiredMove.z = desiredMove.z * movementSettings.CurrentTargetSpeed;
                 desiredMove.y = desiredMove.y * movementSettings.CurrentTargetSpeed;
+                
                 if (m_RigidBody.velocity.sqrMagnitude <
                     (movementSettings.CurrentTargetSpeed * movementSettings.CurrentTargetSpeed))
                 {
@@ -307,6 +325,26 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_RigidBody.AddForce((cam.transform.forward * -1) * 30, ForceMode.VelocityChange);
             yield return new WaitForSeconds(0.75f);
             m_RigidBody.velocity = Vector3.zero;
+        }
+
+        private IEnumerator playFootsteps()
+        {
+            audioPlayed = true;
+
+            if (Running)
+            {
+                audioSource.clip = runningStep;
+                audioSource.Play();
+                yield return new WaitForSeconds(0.522f);
+                audioSource.Stop();
+            }else
+            {
+                audioSource.clip = footStep;
+                audioSource.Play();
+                yield return new WaitForSeconds(1.071f);
+                audioSource.Stop();
+            }
+            audioPlayed = false;
         }
     }
 }
