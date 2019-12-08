@@ -46,15 +46,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
 					CurrentTargetSpeed = ForwardSpeed;
 				}
 #if !MOBILE_INPUT
-                if (Input.GetKey(RunKey) && Player.GetComponent<RigidbodyFirstPersonController>().crouched == false)
-	            {
-		            CurrentTargetSpeed *= RunMultiplier;
-		            m_Running = true;
-	            }
-	            else
-	            {
-		            m_Running = false;
-	            }
+                if (Input.GetKey(RunKey))
+                {
+                    CurrentTargetSpeed *= RunMultiplier;
+                    m_Running = true;
+                    Player.GetComponent<RigidbodyFirstPersonController>().crouched = false;
+                }
+                else
+                {
+                    m_Running = false;
+                }
 #endif
             }
 
@@ -230,6 +231,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_RigidBody.useGravity = false;
                 movementSettings.DoubleJumpForce = 35;
+                m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, (m_RigidBody.velocity.y / 3f), (m_RigidBody.velocity.z * 1.5f));
             }
         }
 
