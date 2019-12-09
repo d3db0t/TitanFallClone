@@ -9,6 +9,7 @@ TagManager:
   - FxTemporaire
   - Concrete
   - OuterHUD
+  - EnemyTitan
   layers:
   - Default
   - TransparentFX
