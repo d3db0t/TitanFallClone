@@ -361,6 +361,70 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02c84e7c25034b04fb43d8fbe1db4107, type: 3}
+--- !u!1 &537338986 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7233374290468159856, guid: 02c84e7c25034b04fb43d8fbe1db4107,
+    type: 3}
+  m_PrefabInstance: {fileID: 537338985}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &537338987 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7233374290468619094, guid: 02c84e7c25034b04fb43d8fbe1db4107,
+    type: 3}
+  m_PrefabInstance: {fileID: 537338985}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &537338989 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1583960717432904367, guid: 02c84e7c25034b04fb43d8fbe1db4107,
+    type: 3}
+  m_PrefabInstance: {fileID: 537338985}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &537338991 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8296172669035804434, guid: 02c84e7c25034b04fb43d8fbe1db4107,
+    type: 3}
+  m_PrefabInstance: {fileID: 537338985}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &537338992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537338989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ab94b81fdf63d94ebd5734ea20ed73e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 7
+  FireRate: 10
+  Range: 100
+  Player: {fileID: 537338986}
+  Camera: {fileID: 537338987}
+  MetalImpactEffect: {fileID: 100002, guid: 00fedc70b62a31e448e8ccc298257b56, type: 3}
+  ConcreteImpactEffect: {fileID: 100002, guid: 99c73c92ac40473459640b165473206f, type: 3}
+  MuzzleFlash: {fileID: 0}
+--- !u!114 &537338993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537338991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ab94b81fdf63d94ebd5734ea20ed73e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 7
+  FireRate: 10
+  Range: 100
+  Player: {fileID: 537338986}
+  Camera: {fileID: 537338987}
+  MetalImpactEffect: {fileID: 100002, guid: 00fedc70b62a31e448e8ccc298257b56, type: 3}
+  ConcreteImpactEffect: {fileID: 100002, guid: 99c73c92ac40473459640b165473206f, type: 3}
+  MuzzleFlash: {fileID: 0}
 --- !u!1 &1228835073
 GameObject:
   m_ObjectHideFlags: 0
