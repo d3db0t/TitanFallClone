@@ -112,6 +112,15 @@ public class ShootingSystem : MonoBehaviour
                     Destroy(ImpactGO, 2f);
                 }
             }
+            else if (hit.transform.tag == "EnemyTitan")
+            {
+                if (!hit.transform.GetComponent<EnemyTitanController>().Dead)
+                {
+                    hit.transform.GetComponent<EnemyTitanController>().TakeDamage(Damage);
+                    GameObject ImpactGO = Instantiate(MetalImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                    Destroy(ImpactGO, 2f);
+                }
+            }
             else if (hit.transform.tag == "Concrete")
             {
                 GameObject ImpactGO = Instantiate(ConcreteImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
