@@ -98,6 +98,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private AudioSource audioSource;
         private bool playAudio;
         private bool audioPlayed = false;
+        public GameObject Shield;
+        [HideInInspector] public bool invincible;
 
 
         public Vector3 Velocity
@@ -161,10 +163,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 StartCoroutine("DashBackwards");
             }
 
-            //if (walking)
-            //{
-            //    StartCoroutine("playFootsteps");
-            //}
+            if (Input.GetKey(KeyCode.F))
+            {
+                StartCoroutine("ActivateDefensiveAbility");
+            }
 
         }
 
@@ -345,6 +347,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 audioSource.Stop();
             }
             audioPlayed = false;
+        }
+
+        private IEnumerator ActivateDefensiveAbility()
+        {
+            Shield.SetActive(true);
+
+            yield return new WaitForSeconds(10);
+            Shield.SetActive(false);
+                        
         }
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class ShieldScript : MonoBehaviour
 {
-
     void Start()
     {
         MeshFilter filter = GetComponent(typeof(MeshFilter)) as MeshFilter;
@@ -30,5 +29,12 @@ public class ShieldScript : MonoBehaviour
                 mesh.SetTriangles(triangles, m);
             }
         }
+        
     }
+
+    private void Update()
+    {
+        transform.Rotate(Vector3.up * 20 * Time.deltaTime, Space.Self);
+    }
+
 }
