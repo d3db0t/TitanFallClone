@@ -25,9 +25,19 @@ public class WeaponsSoundController : MonoBehaviour
         audioSource.PlayOneShot((AudioClip)Resources.Load("SN_Shoot"));
         audioSource.volume = volume;
     }
+    public void SN_Reload(float volume = 1f)
+    {
+        audioSource.PlayOneShot((AudioClip)Resources.Load("SN_Reload"));
+        audioSource.volume = volume;
+    }
     public void SG_Shoot(float volume = 1f)
     {
         audioSource.PlayOneShot((AudioClip)Resources.Load("SG_Shoot"));
+        audioSource.volume = volume;
+    }
+    public void SG_Reload(float volume = 1f)
+    {
+        audioSource.PlayOneShot((AudioClip)Resources.Load("SG_Reload"));
         audioSource.volume = volume;
     }
 }
