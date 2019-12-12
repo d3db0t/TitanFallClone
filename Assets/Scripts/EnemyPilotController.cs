@@ -137,6 +137,7 @@ public class EnemyPilotController : MonoBehaviour
         animator.SetTrigger("Die");
         GetComponent<NavMeshAgent>().isStopped = true;
         OuterHUD.GetComponent<OuterHUDManager>().IncreaseTitanMeter(100);
+        Destroy(gameObject, 1f);
     }
 
     public void Shoot()
@@ -146,4 +147,5 @@ public class EnemyPilotController : MonoBehaviour
         BulletClone.GetComponent<Rigidbody>().AddForce(BulletSpawnPoint.transform.forward * 1700);
         Destroy (BulletClone, 2);
     }
+
 }

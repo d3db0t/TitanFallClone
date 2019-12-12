@@ -227,7 +227,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void OnTriggerEnter(Collider other)
         {
-            if( other.gameObject.tag == "RunnableWall")
+            if( other.gameObject.tag == "RunnableWall" && m_Jumping && movementSettings.Running)
             {
                 m_RigidBody.useGravity = false;
                 movementSettings.DoubleJumpForce = 35;

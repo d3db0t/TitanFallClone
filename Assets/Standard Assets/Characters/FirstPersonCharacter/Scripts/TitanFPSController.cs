@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -100,6 +101,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool audioPlayed = false;
         public GameObject Shield;
         [HideInInspector] public bool invincible;
+        private Collider[] collisionsInRange;
+        private GameObject[] enemies;
+        private GameObject enemyTarget = null;
 
 
         public Vector3 Velocity
@@ -168,6 +172,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 StartCoroutine("ActivateDefensiveAbility");
             }
 
+            FindClosestEnemy();
+
+            if (enemyTarget != null)
+            {
+                cam.transform.LookAt(new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 1.5f, enemyTarget.transform.position.z));
+                //cam.transform.LookAt(Vector3.Lerp(cam.transform.position, enemyTarget.transform.position, 0.5f));
+            }
         }
 
 
@@ -352,10 +363,34 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private IEnumerator ActivateDefensiveAbility()
         {
             Shield.SetActive(true);
-
             yield return new WaitForSeconds(10);
             Shield.SetActive(false);
-                        
+        }
+
+        public void FindClosestEnemy()
+        {
+            GameObject[] enemyPilots;
+            GameObject[] enemyTitans;
+            enemyPilots = GameObject.FindGameObjectsWithTag("Enemy");
+            enemyTitans = GameObject.FindGameObjectsWithTag("EnemyTitan");
+            List<GameObject> allEnemies = new List<GameObject>();
+            allEnemies.AddRange(enemyPilots);
+            allEnemies.AddRange(enemyTitans);
+            GameObject closest = null;
+            float distance = 100f;
+            Vector3 position = transform.position;
+
+            foreach (GameObject go in allEnemies)
+            {
+                Vector3 diff = go.transform.position - position;
+                float curDistance = diff.sqrMagnitude;
+                if (curDistance < distance)
+                {
+                    closest = go;
+                    distance = curDistance;
+                }
+            }
+            enemyTarget = closest;
         }
     }
 }
