@@ -79,6 +79,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public float shellOffset; //reduce the radius by that ratio to avoid getting stuck in wall (a value of 0.1f is nice)
         }
 
+        public AudioClip JumpSound;
+        public AudioClip LandSound;
+        public AudioClip FootstepSound;
+        private AudioSource audioSource;
+        private float FootstepDelay;
 
         public Camera cam;
         public MovementSettings movementSettings = new MovementSettings();
@@ -90,7 +95,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private CapsuleCollider m_Capsule;
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
-        private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded, onWall;
+        private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded, onWall, landed_once;
 
         // Crouch Boolean
         [HideInInspector] public bool crouched = false;
@@ -132,6 +137,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             mouseLook.Init (transform, cam.transform);
+            audioSource = GetComponent<AudioSource>();
         }
 
 
@@ -162,6 +168,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 if (m_RigidBody.velocity.sqrMagnitude <
                     (movementSettings.CurrentTargetSpeed*movementSettings.CurrentTargetSpeed))
                 {
+                    if(FootstepDelay >= movementSettings.BackwardSpeed/movementSettings.CurrentTargetSpeed)
+                    {
+                        FootstepDelay = 0;
+                        audioSource.PlayOneShot(FootstepSound, 1.0f);
+                    }
+                    else
+                    {
+                        FootstepDelay += Time.deltaTime;
+                    }
                     m_RigidBody.AddForce(desiredMove*SlopeMultiplier(), ForceMode.Impulse);
                 }
             }
@@ -175,6 +190,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     m_RigidBody.drag = 0f;
                     m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
                     m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
+                    audioSource.PlayOneShot(JumpSound, 1.0f);
                     m_Jumping = true;
                     doubleJump = true;
                 }
@@ -192,7 +208,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     doubleJump = false;
                     m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
                     m_RigidBody.AddForce(new Vector3(0f, movementSettings.DoubleJumpForce, 0f), ForceMode.Impulse);
-                    
+                    audioSource.PlayOneShot(JumpSound, 1.0f);
+
                 }
 
                 m_RigidBody.drag = 0f;
@@ -274,7 +291,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private Vector2 GetInput()
         {
-            
+
             Vector2 input = new Vector2
                 {
                     x = CrossPlatformInputManager.GetAxis("Horizontal"),
@@ -313,9 +330,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_IsGrounded = true;
                 m_GroundContactNormal = hitInfo.normal;
+
+                if(!landed_once)
+                {
+                    audioSource.PlayOneShot(LandSound, 1.0f);
+                    landed_once = true;
+                }
             }
             else
             {
+                landed_once = false;
                 m_IsGrounded = false;
                 m_GroundContactNormal = Vector3.up;
             }
