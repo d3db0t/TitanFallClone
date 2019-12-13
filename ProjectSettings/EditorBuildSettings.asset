@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ParkourScene.unity
+    guid: cda0aec453929dc4a9f02e35edb88515
+  - enabled: 1
+    path: Assets/Scenes/CombatScene.unity
+    guid: 39684fefea37f0e4da9b8f2bbd7dbc3a
   m_configObjects: {}

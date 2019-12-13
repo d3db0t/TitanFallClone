@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -249,6 +250,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_RigidBody.useGravity = false;
                 movementSettings.DoubleJumpForce = 35;
                 m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, (m_RigidBody.velocity.y / 3f), (m_RigidBody.velocity.z * 1.5f));
+            }
+            else if (other.gameObject.tag == "GoToCombatScene")
+            {
+                SceneManager.LoadScene("CombatScene");
             }
         }
 
