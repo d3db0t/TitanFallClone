@@ -9,6 +9,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof (CapsuleCollider))]
     public class RigidbodyFirstPersonController : MonoBehaviour
     {
+        public bool PlayerInTitanRange;
         [Serializable]
         public class MovementSettings
         {
@@ -104,6 +105,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // doubleJump Boolean
         [HideInInspector] public bool doubleJump = false;
 
+        
+
 
         public Vector3 Velocity
         {
@@ -131,6 +134,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 #endif
             }
         }
+
+        
 
 
         private void Start()
@@ -255,6 +260,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 SceneManager.LoadScene("CombatScene");
             }
+            else if (other.gameObject.tag == "TitanRangeToEnter")
+            {
+                PlayerInTitanRange = true;
+            }
+            else
+            {
+                PlayerInTitanRange = false;
+            }
+
         }
 
         private void OnTriggerExit(Collider other)

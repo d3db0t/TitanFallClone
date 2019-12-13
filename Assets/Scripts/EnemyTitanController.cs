@@ -37,6 +37,7 @@ public class EnemyTitanController : MonoBehaviour
 
     void Update()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         if(!Dead)
         {
             float distance = Vector3.Distance(player.transform.position, transform.position);
