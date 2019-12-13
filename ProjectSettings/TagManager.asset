@@ -10,6 +10,7 @@ TagManager:
   - Concrete
   - OuterHUD
   - EnemyTitan
+  - GoToCombatScene
   layers:
   - Default
   - TransparentFX
