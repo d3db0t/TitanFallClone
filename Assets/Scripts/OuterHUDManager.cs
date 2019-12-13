@@ -15,6 +15,7 @@ public class OuterHUDManager : MonoBehaviour
     public Image HealthBar;
     public Text HealthBarValue;
     public float NextTimeToGenerateHealth;
+    public GameObject gameoverScreen;
     public GameObject Player;
     public GameObject PlayerTitan;
     public GameObject PlayerTitan3DModel;
@@ -94,7 +95,9 @@ public class OuterHUDManager : MonoBehaviour
     }
     public void Die()
     {
-        // GameOverCanvas
-        // TODO
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        gameoverScreen.SetActive(true);
+        Time.timeScale = 0f;
     }
 }
