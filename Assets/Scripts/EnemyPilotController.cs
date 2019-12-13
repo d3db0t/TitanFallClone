@@ -47,7 +47,7 @@ public class EnemyPilotController : MonoBehaviour
             float distance = Vector3.Distance(player.transform.position, transform.position);
             Vector3 playerposition = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
 
-            if (distance <= 10)
+            if (distance <= 7)
             {
                 animator.SetBool("Walk", false);
                 activated = true;
@@ -58,6 +58,7 @@ public class EnemyPilotController : MonoBehaviour
                 animator.SetBool("Walk", false);
                 if (agent.stoppingDistance < distance)
                 {
+                    agent.transform.LookAt(playerposition);
                     agent.SetDestination(player.transform.position);
                     animator.SetBool("StepForward", true);
                 }
