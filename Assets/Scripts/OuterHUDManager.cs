@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityStandardAssets.Characters.FirstPerson;
 public class OuterHUDManager : MonoBehaviour
 {
     public Image FullyChargedTitanMeter;
     public Image TitanMeterBar;
     public float TitanMeterValue;
     public bool TitanIsReady;
+    public bool TitanSpawned;
     public float CurrentHP;
     public float MaxHP;
     public Image HealthBar;
     public Text HealthBarValue;
     public float NextTimeToGenerateHealth;
+    public GameObject Player;
+    public GameObject PlayerTitan;
+    public GameObject PlayerTitan3DModel;
 
     void Start()
     {
@@ -23,6 +27,7 @@ public class OuterHUDManager : MonoBehaviour
         TitanIsReady                   = false;
         CurrentHP                      = MaxHP;
         HealthBarValue.text            = MaxHP.ToString();
+        TitanSpawned                   = false;
     }
 
     void Update()
@@ -33,6 +38,35 @@ public class OuterHUDManager : MonoBehaviour
             HealthBar.fillAmount = CurrentHP / MaxHP;
             HealthBarValue.text  = ((int) CurrentHP).ToString();
         }
+
+        if (TitanIsReady)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                CallTitan();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (Player.GetComponent<RigidbodyFirstPersonController>().PlayerInTitanRange)
+            {
+                Player.SetActive(false);
+                PlayerTitan.SetActive(true);
+                PlayerTitan3DModel.SetActive(false);
+            }
+        }
+    }
+
+    public void CallTitan()
+    {
+        PlayerTitan3DModel.GetComponent<Transform>().position = new Vector3(Player.GetComponent<Transform>().position.x + 2, Player.GetComponent<Transform>().position.y + 2, Player.GetComponent<Transform>().position.z + 2);
+        PlayerTitan3DModel.SetActive(true);
+        TitanIsReady = false;
+        TitanMeterValue = 0f;
+        FullyChargedTitanMeter.enabled = false;
+        TitanSpawned = true;
+        PlayerTitan.GetComponent<Transform>().position = PlayerTitan3DModel.GetComponent<Transform>().position;
     }
 
     public void IncreaseTitanMeter(float value)

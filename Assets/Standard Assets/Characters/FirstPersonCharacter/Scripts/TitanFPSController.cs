@@ -104,6 +104,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private Collider[] collisionsInRange;
         private GameObject[] enemies;
         private GameObject enemyTarget = null;
+        public bool CoreAbilityActive;
 
 
         public Vector3 Velocity
@@ -140,6 +141,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Capsule = GetComponent<CapsuleCollider>();
             audioSource = GetComponent<AudioSource>();
             mouseLook.Init(transform, cam.transform);
+            CoreAbilityActive = false;
         }
 
 
@@ -172,7 +174,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 StartCoroutine("ActivateDefensiveAbility");
             }
 
-            FindClosestEnemy();
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                CoreAbilityActive = !CoreAbilityActive;
+            }
+
+            if (CoreAbilityActive)
+            {
+                FindClosestEnemy();
+            }
 
             if (enemyTarget != null)
             {
