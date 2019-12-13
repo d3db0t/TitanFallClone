@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public Slider musicSlider;
     public Slider sfxSlider;
     private GameManager gameManager;
-    void Start()
+    void Awake()
     {
         if(gameManager == null)
         {
@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+
+        DontDestroyOnLoad(this.gameManager);
+
     }
 
     void Update()

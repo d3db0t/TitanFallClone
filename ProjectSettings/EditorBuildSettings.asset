@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: d44f460aca2c8ba4ea0d7d9c26eec520
+  - enabled: 1
     path: Assets/Scenes/ParkourScene.unity
     guid: cda0aec453929dc4a9f02e35edb88515
   - enabled: 1

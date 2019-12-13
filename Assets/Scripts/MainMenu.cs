@@ -59,6 +59,6 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("ParkourLevel");
+        SceneManager.LoadScene("ParkourScene");
     }
 }
