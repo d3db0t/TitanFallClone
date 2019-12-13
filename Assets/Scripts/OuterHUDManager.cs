@@ -16,6 +16,7 @@ public class OuterHUDManager : MonoBehaviour
     public Text HealthBarValue;
     public float NextTimeToGenerateHealth;
     public GameObject gameoverScreen;
+    public GameObject gameoverScreen;
     public GameObject Player;
     public GameObject PlayerTitan;
     public GameObject PlayerTitan3DModel;
